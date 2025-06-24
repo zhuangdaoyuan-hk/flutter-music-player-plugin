@@ -1,8 +1,5 @@
 package com.mtechviral.musicfinder;
 
-/**
- * Created by pawankumar on 22/03/18.
- */
 import android.Manifest;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;

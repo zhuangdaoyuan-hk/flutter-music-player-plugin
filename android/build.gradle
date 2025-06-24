@@ -3,37 +3,50 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://repo1.maven.org/maven2/'}
+        ///esp-idf-provisioning-android
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath("com.android.tools.build:gradle:8.7.0")
     }
 }
 
 rootProject.allprojects {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://repo1.maven.org/maven2/'}
+        ///esp-idf-provisioning-android
+        maven { url 'https://jitpack.io' }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    namespace 'com.mtechviral.musicfinder'
+    compileSdkVersion 34
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
         disable 'InvalidPackage'
     }
+    compileOptions.encoding="UTF-8"
+    dependencies {
+        implementation 'androidx.appcompat:appcompat:1.0.0'
+    }
 }
 
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-}

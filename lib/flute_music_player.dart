@@ -11,17 +11,17 @@ class MusicFinder {
   bool _handlePermissions = true;
   bool _executeAfterPermissionGranted = true;
 
-  TimeChangeHandler durationHandler;
-  TimeChangeHandler positionHandler;
-  VoidCallback startHandler;
-  VoidCallback completionHandler;
-  ErrorHandler errorHandler;
+  late TimeChangeHandler durationHandler;
+  late TimeChangeHandler positionHandler;
+  late VoidCallback startHandler;
+  late VoidCallback completionHandler;
+  late ErrorHandler errorHandler;
 
   MusicFinder() {
     _channel.setMethodCallHandler(platformCallHandler);
     //durationNotifier = new ValueNotifier(new Duration());
   }
-  Future<dynamic> play(String url, {bool isLocal: false}) =>
+  Future<dynamic> play(String url, {bool isLocal = false}) =>
       _channel.invokeMethod('play', {"url": url, "isLocal": isLocal});
 
   Future<dynamic> pause() => _channel.invokeMethod('pause');
@@ -66,8 +66,7 @@ class MusicFinder {
     return this;
   }
 
-  static Future<String> get platformVersion =>
-      _channel.invokeMethod('getPlatformVersion');
+  static Future get platformVersion => _channel.invokeMethod('getPlatformVersion');
 
   static Future<dynamic> allSongs() async {
     var completer = new Completer();
@@ -122,15 +121,15 @@ class MusicFinder {
 }
 
 class Song {
-  int id;
-  String artist;
-  String title;
-  String album;
-  int albumId;
-  int duration;
-  String uri;
-  String albumArt;
-  int trackId;
+  int id=-1;
+  String? artist;
+  String? title;
+  String? album;
+  int albumId=-1;
+  int duration=0;
+  String? uri;
+  String? albumArt;
+  int trackId=-1;
 
   Song(this.id, this.artist, this.title, this.album, this.albumId,
       this.duration, this.uri, this.albumArt, this.trackId);

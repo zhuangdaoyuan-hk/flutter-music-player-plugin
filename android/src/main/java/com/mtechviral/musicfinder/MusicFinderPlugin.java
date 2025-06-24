@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,18 +23,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /**
  * MusicFinderPlugin
  */
-public class MusicFinderPlugin implements MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
-  private final MethodChannel channel;
+public class MusicFinderPlugin implements FlutterPlugin,MethodCallHandler {
+  private MethodChannel channel;
 
   private static final int REQUEST_CODE_STORAGE_PERMISSION = 3777;
 
@@ -50,26 +50,35 @@ public class MusicFinderPlugin implements MethodCallHandler, PluginRegistry.Requ
 
   MediaPlayer mediaPlayer;
 
-  /**
-   * Plugin registration.
-   */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "music_finder");
-    instance = new MusicFinderPlugin(registrar.activity(), channel);
-    registrar.addRequestPermissionsResultListener(instance);
-    channel.setMethodCallHandler(instance);
 
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "music_finder");
+    channel.setMethodCallHandler(this);
   }
 
-  private MusicFinderPlugin(Activity activity, MethodChannel channel) {
-    this.activity = activity;
-    this.channel = channel;
-    this.channel.setMethodCallHandler(this);
-    if (MusicFinderPlugin.am == null) {
-      MusicFinderPlugin.am = (AudioManager) activity.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-    }
-
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
   }
+
+//  public static void registerWith(Registrar registrar) {
+//    final MethodChannel channel = new MethodChannel(registrar.messenger(), "music_finder");
+//    instance = new MusicFinderPlugin(flutterPluginBinding.activity(), channel);
+//    registrar.addRequestPermissionsResultListener(instance);
+//    channel.setMethodCallHandler(instance);
+//
+//  }
+
+//  private MusicFinderPlugin(Activity activity, MethodChannel channel) {
+//    this.activity = activity;
+//    this.channel = channel;
+//    this.channel.setMethodCallHandler(this);
+//    if (MusicFinderPlugin.am == null) {
+//      MusicFinderPlugin.am = (AudioManager) activity.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+//    }
+//
+//  }
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
@@ -83,7 +92,7 @@ public class MusicFinderPlugin implements MethodCallHandler, PluginRegistry.Requ
       arguments = (Map<String, Object>) call.arguments;
       boolean handlePermission = (boolean) arguments.get("handlePermissions");
       this.executeAfterPermissionGranted = (boolean) arguments.get("executeAfterPermissionGranted");
-      checkPermission(handlePermission);
+//      checkPermission(handlePermission);
       // result.success(getData());
 
     } else if (call.method.equals("play")) {
@@ -109,29 +118,28 @@ public class MusicFinderPlugin implements MethodCallHandler, PluginRegistry.Requ
     }
   }
 
-  private void checkPermission(boolean handlePermission) {
-    if (checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-      if (shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-        // TODO: user should be explained why the app needs the permission
-        if (handlePermission) {
-          requestPermissions();
-        } else {
-          setNoPermissionsError();
-        }
-      } else {
-        if (handlePermission) {
-          requestPermissions();
-        } else {
-          setNoPermissionsError();
-        }
-      }
-
-    } else {
-      pendingResult.success(getData());
-      pendingResult = null;
-      arguments = null;
-    }
-  }
+//  private void checkPermission(boolean handlePermission) {
+//    if (checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//      if (shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//        if (handlePermission) {
+//          requestPermissions();
+//        } else {
+//          setNoPermissionsError();
+//        }
+//      } else {
+//        if (handlePermission) {
+//          requestPermissions();
+//        } else {
+//          setNoPermissionsError();
+//        }
+//      }
+//
+//    } else {
+//      pendingResult.success(getData());
+//      pendingResult = null;
+//      arguments = null;
+//    }
+//  }
 
   private void scanMusicFiles(File[] files) {
     for (File file: files) {
@@ -159,54 +167,53 @@ public class MusicFinderPlugin implements MethodCallHandler, PluginRegistry.Requ
     return songsMap;
   }
 
-  @TargetApi(Build.VERSION_CODES.M)
-  private void requestPermissions() {
-    activity.requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
-        REQUEST_CODE_STORAGE_PERMISSION);
-  }
+//  @TargetApi(Build.VERSION_CODES.M)
+//  private void requestPermissions() {
+//    activity.requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+//        REQUEST_CODE_STORAGE_PERMISSION);
+//  }
 
-  private boolean shouldShowRequestPermissionRationale(Activity activity, String permission) {
-    if (Build.VERSION.SDK_INT >= 23) {
-      return activity.shouldShowRequestPermissionRationale(permission);
-    }
-    return false;
-  }
+//  private boolean shouldShowRequestPermissionRationale(Activity activity, String permission) {
+//    if (Build.VERSION.SDK_INT >= 23) {
+//      return activity.shouldShowRequestPermissionRationale(permission);
+//    }
+//    return false;
+//  }
 
-  private int checkSelfPermission(Context context, String permission) {
-    if (permission == null) {
-      throw new IllegalArgumentException("permission is null");
-    }
-    return context.checkPermission(permission, android.os.Process.myPid(), Process.myUid());
-  }
-
-  @Override
-  public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
-      for (int i = 0; i < permissions.length; i++) {
-        String permission = permissions[i];
-        int grantResult = grantResults[i];
-
-        if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-          if (grantResult == PackageManager.PERMISSION_GRANTED) {
-            if (executeAfterPermissionGranted) {
-              pendingResult.success(getData());
-              pendingResult = null;
-              arguments = null;
-            }
-          } else {
-            setNoPermissionsError();
-          }
-        }
-      }
-    }
-    return false;
-  }
-
-  private void setNoPermissionsError() {
-    pendingResult.error("permission", "you don't have the user permission to access the camera", null);
-    pendingResult = null;
-    arguments = null;
-  }
+//  private int checkSelfPermission(Context context, String permission) {
+//    if (permission == null) {
+//      throw new IllegalArgumentException("permission is null");
+//    }
+//    return context.checkPermission(permission, android.os.Process.myPid(), Process.myUid());
+//  }
+//
+//  public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//    if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
+//      for (int i = 0; i < permissions.length; i++) {
+//        String permission = permissions[i];
+//        int grantResult = grantResults[i];
+//
+//        if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//          if (grantResult == PackageManager.PERMISSION_GRANTED) {
+//            if (executeAfterPermissionGranted) {
+//              pendingResult.success(getData());
+//              pendingResult = null;
+//              arguments = null;
+//            }
+//          } else {
+//            setNoPermissionsError();
+//          }
+//        }
+//      }
+//    }
+//    return false;
+//  }
+//
+//  private void setNoPermissionsError() {
+//    pendingResult.error("permission", "you don't have the user permission to access the camera", null);
+//    pendingResult = null;
+//    arguments = null;
+//  }
 
   private void mute(Boolean muted) {
     if (MusicFinderPlugin.am == null)

@@ -1,8 +1,7 @@
 name: flute_music_player
 description: A new flutter music player with audio plugin.
-version: 0.0.6
-author: Pawan Kumar <mtechviral@gmail.com>
-homepage: https://github.com/iampawan/Flute-Music-Player
+version: 0.0.7
+homepage: https://github.com/zhuangdaoyuan-hk/flutter-music-player-pugin
 
 dependencies:
   flutter:
@@ -18,7 +17,7 @@ flutter:
     pluginClass: MusicFinderPlugin
 
 environment:
-  sdk: ">=2.0.0-dev.28.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

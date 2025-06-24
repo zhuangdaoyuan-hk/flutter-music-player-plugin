@@ -18,22 +18,20 @@ class AudioApp extends StatefulWidget {
 }
 
 class _AudioAppState extends State<AudioApp> {
-  Duration duration;
-  Duration position;
+   Duration duration= new Duration();
+   Duration position=new Duration();
 
-  MusicFinder audioPlayer;
+  late MusicFinder audioPlayer;
 
-  String localFilePath;
+   String localFilePath="";
 
   PlayerState playerState = PlayerState.stopped;
 
   get isPlaying => playerState == PlayerState.playing;
   get isPaused => playerState == PlayerState.paused;
 
-  get durationText =>
-      duration != null ? duration.toString().split('.').first : '';
-  get positionText =>
-      position != null ? position.toString().split('.').first : '';
+  get durationText => duration.toString().split('.').first;
+  get positionText =>position.toString().split('.').first;
 
   bool isMuted = false;
 
@@ -148,20 +146,17 @@ class _AudioAppState extends State<AudioApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    new Material(child: _buildPlayer()),
-                    localFilePath != null
-                        ? new Text(localFilePath)
-                        : new Container(),
+                    new Material(child: _buildPlayer()), new Text(localFilePath),
                     new Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            new RaisedButton(
+                            new ElevatedButton(
                               onPressed: () => {},
                               child: new Text('Download'),
                             ),
-                            new RaisedButton(
+                            new ElevatedButton(
                               onPressed: () => _playLocal(),
                               child: new Text('play local'),
                             ),

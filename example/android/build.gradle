@@ -1,29 +1,23 @@
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
-    }
-}
-
 allprojects {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://repo1.maven.org/maven2/'}
+        ///esp-idf-provisioning-android
+        maven { url 'https://jitpack.io' }
     }
 }
 
-rootProject.buildDir = '../build'
+
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

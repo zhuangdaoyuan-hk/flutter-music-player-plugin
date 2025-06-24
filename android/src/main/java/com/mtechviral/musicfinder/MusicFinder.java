@@ -13,10 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by pawankumar on 22/03/18.
- */
-
 public class MusicFinder {
     private static final String TAG = "MPLAY_MUSIC_FINDER";
 
