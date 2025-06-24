@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flute_music_player/flute_music_player.dart';
+import 'package:flute_music_player/flutter_music_player.dart';
 import 'package:flutter/material.dart';
 
 typedef void OnError(Exception exception);
@@ -23,7 +23,7 @@ class _AudioAppState extends State<AudioApp> {
 
   late MusicFinder audioPlayer;
 
-   String localFilePath="";
+  String localFilePath="";
 
   PlayerState playerState = PlayerState.stopped;
 
