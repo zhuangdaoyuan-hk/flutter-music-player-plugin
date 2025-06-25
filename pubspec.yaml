@@ -2,7 +2,7 @@ name: flutter_music_player_plugin
 description: A new flutter music player with audio plugin.
 version: 0.0.1
 homepage: https://github.com/zhuangdaoyuan-hk/flutter-music-player-pugin
-publish_to: https://pub.dartlang.org
+publish_to: none
 
 dependencies:
   flutter:
