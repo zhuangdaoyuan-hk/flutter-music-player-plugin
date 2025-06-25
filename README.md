@@ -29,7 +29,7 @@ First Open Source Flutter based material design music player with audio plugin t
 
 ## Music Player Development Project
 
-[Flutter Beautiful Music Player](https://github.com/iampawan/Flutter-Music-Player)
+[Flutter Beautiful Music Player](https://github.com/zhuangdaoyuan-hk/flutter-music-player-plugin)
 
 ### Screenshots
 
@@ -37,11 +37,11 @@ First Open Source Flutter based material design music player with audio plugin t
 
 ## Usage
 
-[Example](https://github.com/iampawan/Flute-Music-Player/blob/master/example/lib/main.dart)
+[Example](https://github.com/zhuangdaoyuan-hk/flutter-music-player-plugin/blob/master/example/lib/main.dart)
 
 To use this plugin :
 
-* add the dependency to your [pubspec.yaml](https://github.com/iampawan/Flute-Music-Player/blob/master/example/pubspec.yaml) file.
+* add the dependency to your [pubspec.yaml](https://github.com/zhuangdaoyuan-hk/flutter-music-player-plugin/blob/master/example/pubspec.yaml) file.
 
 ```yaml
   dependencies:
@@ -150,8 +150,6 @@ I welcome and encourage all pull requests. It usually will take me within 24-48 
 
 ### Created & Maintained By
 
-[Pawan Kumar](https://github.com/iampawan) ([@imthepk](https://www.twitter.com/imthepk)) ([Youtube](https://www.youtube.com/c/MTechViral))
-([Insta](https://www.instagram.com/codepur_ka_superhero))
 
 > If you found this project helpful or you learned something from the source code and want to thank me, consider buying me a cup of :coffee:
 >

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flute_music_player/flutter_music_player.dart';
+import 'package:flutter_music_player_plugin/flutter_music_player_plugin.dart';
 import 'package:flutter/material.dart';
 
 typedef void OnError(Exception exception);

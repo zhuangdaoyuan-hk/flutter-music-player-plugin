@@ -1,5 +1,5 @@
 name: flute_demo
-description: Demonstrates how to use the flute_music_player plugin.
+description: Demonstrates how to use the flutter_music_player_plugin.
 
 
 environment:
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flute_music_player:
+  flutter_music_player_plugin:
     path: ../
 
 # For information on the generic Dart part of this file, see the
